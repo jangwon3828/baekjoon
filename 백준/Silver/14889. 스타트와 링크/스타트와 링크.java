@@ -1,50 +1,78 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
 public class Main {
-    static int[][] s;
-    static int n;
-    static int go(int index, ArrayList<Integer> first, ArrayList<Integer> second) {
-        if (index == n) {
-            if (first.size() != n/2) return -1;
-            if (second.size() != n/2) return -1;
-            int t1 = 0;
-            int t2 = 0;
-            for (int i=0; i<n/2; i++) {
-                for (int j=0; j<n/2; j++) {
-                    if (i == j) continue;
-                    t1 += s[first.get(i)][first.get(j)];
-                    t2 += s[second.get(i)][second.get(j)];
-                }
+
+    static int N;
+    static int[][] map;
+    static boolean[] visit;
+
+    static int Min = Integer.MAX_VALUE;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        N = Integer.parseInt(br.readLine());
+
+        map = new int[N][N];
+        visit = new boolean[N];
+
+
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
+            for (int j = 0; j < N; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
             }
-            int diff = Math.abs(t1-t2);
-            return diff;
         }
-        int ans = -1;
-        first.add(index);
-        int t1 = go(index+1, first, second);
-        if (ans == -1 || (t1 != -1 && ans > t1)) {
-            ans = t1;
-        }
-        first.remove(first.size()-1);
-        second.add(index);
-        int t2 = go(index+1, first, second);
-        if (ans == -1 || (t2 != -1 && ans > t2)) {
-            ans = t2;
-        }
-        second.remove(second.size()-1);
-        return ans;
+
+        combi(0, 0);
+        System.out.println(Min);
+
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        s = new int[n][n];
-        for (int i=0; i<n; i++) {
-            for (int j=0; j<n; j++) {
-                s[i][j] = sc.nextInt();
+    static void combi(int idx, int count) {
+        if(count == N / 2) {
+            diff();
+            return;
+        }
+
+        for(int i = idx; i < N; i++) {
+            if(!visit[i]) {
+                visit[i] = true;
+                combi(i + 1, count + 1);
+                visit[i] = false;
             }
         }
-        ArrayList<Integer> first = new ArrayList<>();
-        ArrayList<Integer> second = new ArrayList<>();
-        System.out.println(go(0, first, second));
     }
+
+    static void diff() {
+        int team_start = 0;
+        int team_link = 0;
+
+        for (int i = 0; i < N - 1; i++) {
+            for (int j = i + 1; j < N; j++) {
+                if (visit[i] == true && visit[j] == true) {
+                    team_start += map[i][j];
+                    team_start += map[j][i];
+                }
+                else if (visit[i] == false && visit[j] == false) {
+                    team_link += map[i][j];
+                    team_link += map[j][i];
+                }
+            }
+        }
+        int val = Math.abs(team_start - team_link);
+
+        if (val == 0) {
+            System.out.println(val);
+            System.exit(0);
+        }
+
+        Min = Math.min(val, Min);
+
+    }
+
 }
