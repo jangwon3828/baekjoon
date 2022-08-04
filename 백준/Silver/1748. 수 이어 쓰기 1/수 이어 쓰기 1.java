@@ -1,16 +1,12 @@
-import java.util.*;
+import java.io.*;
 public class Main {
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        long ans = 0;
-        for (int start=1, len=1; start<=n; start*=10, len++) {
-            int end = start*10-1;
-            if (end > n) {
-                end = n;
-            }
-            ans += (long)(end - start + 1) * len;
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(bf.readLine());
+        long cnt = 0;
+        for (int i = 1; i <= n; i *= 10) {
+            cnt += n - i + 1;
         }
-        System.out.println(ans);
+        System.out.println(cnt);
     }
 }
