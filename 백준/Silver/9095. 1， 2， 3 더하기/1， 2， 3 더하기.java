@@ -1,15 +1,12 @@
-import java.util.*;
-import java.math.*;
+import java.io.*;
 public class Main {
-
     static int dp[] = new int [11];
 
-    public static void main(String[] args)   {
-        Scanner sc = new Scanner(System.in);
-
-
-        int t = sc.nextInt();
-        dp[1] =1; //초기 값 초기화
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb= new StringBuilder();
+        int t = Integer.parseInt(bf.readLine());
+        dp[1] =1;
         dp[2]=2;
         dp[3]=4;
 
@@ -18,10 +15,11 @@ public class Main {
         }
 
         for(int i=0;i<t;i++) {
-            int n = sc.nextInt();
-
-            System.out.println(dp[n]);
+            int n = Integer.parseInt(bf.readLine());
+            sb.append(dp[n]).append("\n");
         }
+
+        System.out.println(sb);
 
     }
 
