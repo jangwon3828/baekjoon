@@ -1,4 +1,4 @@
-# [Silver II] 부등호 - 2529 
+# [Silver I] 부등호 - 2529 
 
 [문제 링크](https://www.acmicpc.net/problem/2529) 
 
