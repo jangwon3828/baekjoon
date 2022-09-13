@@ -1,24 +1,21 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
-    public static boolean next_permutation(int[] a) {
-        int i = a.length-1;
-        while (i > 0 && a[i-1] >= a[i]) {
-            i -= 1;
+    public static boolean next(int[] a){
+        int i=a.length-1;
+        while (i>0&&a[i-1]>=a[i]){
+            i-=1;
         }
-
-        if (i <= 0) {
+        if(i<=0){
             return false;
         }
-
-        int j = a.length-1;
-        while (a[j] <= a[i-1]) {
-            j -= 1;
+        int j= a.length-1;
+        while (a[j]<=a[i-1]){
+            j-=1;
         }
-
-        int temp = a[i-1];
-        a[i-1] = a[j];
-        a[j] = temp;
+        int temp=a[i-1];
+        a[i-1]=a[j];
+        a[j]=temp;
 
         j = a.length-1;
         while (i < j) {
@@ -29,11 +26,14 @@ public class Main {
             j -= 1;
         }
         return true;
+
+
     }
-    public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[][] a = new int[n][n];
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int[][]a=new int[n][n];
         for (int i=0; i<n; i++) {
             for (int j=0; j<n; j++) {
                 a[i][j] = sc.nextInt();
@@ -43,9 +43,10 @@ public class Main {
         for (int i=0; i<n; i++) {
             d[i] = i;
         }
-        int ans = Integer.MAX_VALUE;
+        int ans=Integer.MAX_VALUE;
 
-        do {
+        do{
+            if (d[0] != 0) break;
             boolean ok = true;
             int sum = 0;
             for (int i=0; i<n-1; i++) {
@@ -61,8 +62,10 @@ public class Main {
                     ans = sum;
                 }
             }
-        } while(next_permutation(d));
+        } while(next(d));
 
         System.out.println(ans);
+
     }
+
 }
