@@ -11,15 +11,13 @@ public class Main {
         StringTokenizer st = new StringTokenizer(bf.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-        int[][] map = new int[n][m];
+        char[][] map = new char[n][m];
         for (int i = 0; i < n; i++) {
             String s = bf.readLine();
             for (int j = 0; j < m; j++) {
                 map[i][j] = s.charAt(j);
             }
         }
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{0, 0});
         int count = 0;
         for (int i = 0; i < n; i++) {
             int tmp = 0;
@@ -31,6 +29,7 @@ public class Main {
                 }
             }
         }
+
         for (int j = 0; j < m; j++) {
             int tmp = 0;
             for (int i = 0; i < n; i++) {
@@ -41,7 +40,6 @@ public class Main {
                 }
             }
         }
-
         System.out.println(count);
     }
 }
