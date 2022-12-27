@@ -1,19 +1,16 @@
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        int max=Integer.MIN_VALUE;
         int count=0;
-        int max=0;
+        Scanner sc=new Scanner(System.in);
         for (int i = 0; i < 10; i++) {
-            int n=sc.nextInt();
-            int m=sc.nextInt();
-            count=count+m-n;
+            int out = sc.nextInt();
+            int in = sc.nextInt();
+            count=count-out+in;
             max=Math.max(count,max);
         }
         System.out.println(max);
     }
-
 }
-
