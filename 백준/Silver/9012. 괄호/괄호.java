@@ -1,50 +1,41 @@
-import java.util.*;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class Main {
-    public static void main(String[] args) {
-       Scanner sc=new Scanner(System.in);
-
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
         StringBuilder sb = new StringBuilder();
-        int a = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            Stack<Character> stack = new Stack<>();
+            String next = sc.next();
+            boolean check = true;
+            for (int j = 0; j < next.length(); j++) {
 
-        for (int i = 0; i < a; i++) {
-            ArrayList<Character> chars=new ArrayList<Character>();
-            String str = sc.next();
-            if(str.length()%2!=0)
-            {
-                sb.append("NO").append("\n");
-                continue;
-            }
-            for(int x=0;x<str.length();x++)
-            {
-                try{
-                    if(str.charAt(x)==40)
-                    {
-                        chars.add(str.charAt(x));
-                    }
-                    if(str.charAt(x)==41)
-                    {
-                        chars.remove(chars.size()-1);
-                    }
+                char c = next.charAt(j);
 
-                    if(x==str.length()-1&&chars.size()==0)
-                    {
-                        sb.append("YES").append("\n");
-                        break;
-                    }
-                    if(x==str.length()-1&&chars.size()!=0)
-                    {
+                if (c == '(') {
+                    stack.push(c);
+                }
+                if (c == ')') {
+                    if (stack.size() == 0) {
+                        check = false;
                         sb.append("NO").append("\n");
                         break;
                     }
+                    stack.pop();
                 }
-                catch (Exception ex)
-                {
-                    sb.append("NO").append("\n");
-                    break;
-                }
-            }
+                if (j == next.length() - 1) {
+                    check = stack.isEmpty();
 
+                    if (!check) sb.append("NO").append("\n");
+                }
+
+            }
+            if (check) {
+                sb.append("YES").append("\n");
+            }
         }
         System.out.println(sb);
     }
