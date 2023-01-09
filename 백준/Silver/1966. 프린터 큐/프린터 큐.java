@@ -1,43 +1,43 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
+
 public class Main {
     public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(bf.readLine());
         StringBuilder sb = new StringBuilder();
-        int T = Integer.parseInt(br.readLine());
-        for(int x=0;x<T;x++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int N = Integer.parseInt(st.nextToken());
-            int M = Integer.parseInt(st.nextToken());
-            LinkedList<int[]> q = new LinkedList<>();
-            st = new StringTokenizer(br.readLine());
-            for (int i = 0; i < N; i++) {
-                q.offer(new int[]{i, Integer.parseInt(st.nextToken())});
+        for (int i = 0; i < n; i++) {
+            PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+            StringTokenizer st = new StringTokenizer(bf.readLine());
+            int size = Integer.parseInt(st.nextToken());
+            int location = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(bf.readLine());
+            int[] arr = new int[size];
+            int index = 0;
+            while (st.hasMoreTokens()) {
+                int a = Integer.parseInt(st.nextToken());
+                arr[index] = a;
+                index++;
+                pq.offer(a);
             }
-            int count = 0;
-            while (!q.isEmpty()) {
-                int[] front = q.poll();
-                boolean isMax = true;
-                for(int i = 0; i < q.size(); i++) {
-                    if (front[1] < q.get(i)[1]) {
-                        q.offer(front);
-                        for (int j = 0; j < i; j++) {
-                            q.offer(q.poll());
+            int time = 0;
+            a : while (!pq.isEmpty()) {
+                for (int j = 0; j < arr.length; j++) {
+                    if (arr[j] == pq.peek()) {
+                        if (location == j) {
+                            time++;
+                            sb.append(time).append("\n");
+                            pq.poll();
+                            break a;
                         }
-                        isMax = false;
-                        break;
+                        time++;
+                        pq.poll();
                     }
                 }
-                if(isMax == false) {
-                    continue;
-                }
-                count++;
-                if(front[0] == M) {
-                    break;
-                }
             }
-            sb.append(count).append('\n');
         }
         System.out.println(sb);
     }
