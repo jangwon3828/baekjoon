@@ -1,40 +1,38 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-
-        int n = Integer.parseInt(bf.readLine());
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
+StringBuilder sb=new StringBuilder();
+        for (int i = 0; i < t; i++) {
+            String[] split = br.readLine().split(" ");
+            int count = Integer.parseInt(split[0]);
+            int index = Integer.parseInt(split[1]);
+            int[] arr = new int[count];
+            StringTokenizer st = new StringTokenizer(br.readLine());
             PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
-            StringTokenizer st = new StringTokenizer(bf.readLine());
-            int size = Integer.parseInt(st.nextToken());
-            int location = Integer.parseInt(st.nextToken());
-            st = new StringTokenizer(bf.readLine());
-            int[] arr = new int[size];
-            int index = 0;
-            while (st.hasMoreTokens()) {
-                int a = Integer.parseInt(st.nextToken());
-                arr[index] = a;
-                index++;
-                pq.offer(a);
+            for (int j = 0; j < count; j++) {
+                int num = Integer.parseInt(st.nextToken());
+                arr[j] = num;
+                pq.offer(num);
             }
-            int time = 0;
-            a : while (!pq.isEmpty()) {
+            int answer=0;
+            while (!pq.isEmpty()) {
                 for (int j = 0; j < arr.length; j++) {
-                    if (arr[j] == pq.peek()) {
-                        if (location == j) {
-                            time++;
-                            sb.append(time).append("\n");
-                            pq.poll();
-                            break a;
+                    if (pq.peek() == arr[j]){
+                        if(j==index){
+                            sb.append(++answer).append("\n");
+                            pq.clear();
+                            break ;
                         }
-                        time++;
                         pq.poll();
+                        answer++;
                     }
                 }
             }
