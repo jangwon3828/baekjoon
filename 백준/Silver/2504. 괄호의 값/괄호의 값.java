@@ -1,39 +1,50 @@
-import java.util.*;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String N = sc.next();
+        String next = sc.next();
         Stack<Character> stack = new Stack<>();
-        int result = 0;
-        int value = 1;
-        for(int i = 0; i < N.length(); i++) {
-            if(N.charAt(i) == '(') {
-                stack.push(N.charAt(i));
-                value *= 2; //( : 2
-            } else if(N.charAt(i) == '[') {
-                stack.push(N.charAt(i));
-                value *= 3; //[ : 3
-            } else if(N.charAt(i) == ')') {
-                if(stack.isEmpty() || stack.peek() != '(') {
-                    result = 0;
+        int answer = 0;
+        int temp=1;
+        a:for (int i = 0; i < next.length(); i++) {
+            Character c = next.charAt(i);
+            switch (c) {
+                case '(':
+                    stack.push(c);
+                    temp*=2;
                     break;
-                } else if(N.charAt(i-1) == '(') {
-                    result += value;
-                }
-                stack.pop();
-                value /= 2;
-            } else if(N.charAt(i) == ']') {
-                if (stack.isEmpty() || stack.peek() != '[') {
-                    result = 0;
+                case '[':
+                    stack.push(c);
+                    temp*=3;
                     break;
-                } else if (N.charAt(i - 1) == '[') {
-                    result += value;
-                }
-                stack.pop();
-                value /= 3;
+                case ')':
+                    if (stack.isEmpty()||stack.peek()!='(') {
+                        answer = 0;
+                        break a;
+                    }
+                    stack.pop();
+                    if(next.charAt(i-1) == '(') {
+                        answer+=temp;
+                    }
+
+                    temp/=2;
+                    break;
+
+                case ']':
+                    if (stack.isEmpty()||stack.peek()!='[') {
+                        answer = 0;
+                        break a;
+                    }
+                    stack.pop();
+                    if(next.charAt(i-1) == '[') {
+                        answer+=temp;
+                    }
+                    temp/=3;
+                    break;
             }
         }
-        System.out.println(!stack.empty()?0:result);
+        System.out.println(stack.isEmpty()?answer:0);
     }
 }
