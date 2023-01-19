@@ -1,19 +1,17 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        long a = sc.nextLong();
-        long temp=1;
+        long n = sc.nextLong();
         long count=1;
-        for (long j = 2; j < a; j++) {
-            if(temp+j>a){
+        long total=1;
+        for (int i = 2; i < n; i++) {
+            if(total+i>n)
                 break;
-            }
-            temp+=j;
+            total+=i;
             count++;
         }
         System.out.println(count);
-
     }
 }
